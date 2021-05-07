@@ -4,11 +4,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class imgAnalyzer {
+public class imgAnalyzer extends Thread {
 
     public static final String pathImg = "/home/deblazz/Documents/tesina/media/pic.jpg";
     public static final String pathImg2 = "/home/deblazz/Documents/tesina/media/pic2.jpg";
-    public static final String outputCanvas = "/home/deblazz/Documents/tesina/media/outputCanvas.png";
 
 
     public static BufferedImage openImage(String path) throws IOException {
@@ -16,12 +15,11 @@ public class imgAnalyzer {
         return ImageIO.read(img);
     }
 
-    public static Boolean compareImgs(BufferedImage img1, BufferedImage img2) throws IOException {
-        File canvas = new File(outputCanvas);
-        BufferedImage bufferedCanvas = ImageIO.read(canvas);
+    public static Boolean compareImgs(BufferedImage img1, BufferedImage img2, int minWidth, int maxWidth, int minHeight, int maxHeight, BufferedImage outputImage) throws IOException {
+
         Boolean thereAreDifferences = false;
-        int heightImg2 = img2.getHeight();
         int widthImg2 = img2.getWidth();
+        int heightImg2 = img2.getHeight();
 
         for (int y = 0; y < img1.getHeight(); y++) {
             for (int x = 0; x < img1.getWidth(); x++) {
@@ -33,19 +31,18 @@ public class imgAnalyzer {
                     // TODO: 05/05/21 wrap writeToCanvas in class
                     Color myColor2 = new Color(img2.getRGB(x, y));
                     if (isSimiliar(myColor2.getRed(), myColor.getRed()) && isSimiliar(myColor2.getGreen(), myColor.getGreen()) && isSimiliar(myColor2.getBlue(), myColor.getBlue())) {
-                        bufferedCanvas = clearPixel(x, y, bufferedCanvas);
+                        outputImage = clearPixel(x, y, outputImage);
                     } else {
-                        bufferedCanvas = writeToCanvas(x, y, myColor2.getRGB(), bufferedCanvas);
+                        outputImage = writeToCanvas(x, y, myColor2.getRGB(), outputImage);
                         thereAreDifferences = true;
                     }
 
                 } else {
-                    bufferedCanvas = clearPixel(x, y, bufferedCanvas);
+                    outputImage = clearPixel(x, y, outputImage);
                 }
             }
         }
-        ImageIO.write(bufferedCanvas, "PNG", canvas);
-        return thereAreDifferences;
+        return thereAreDifferences ? true : null;
     }
 
     public static BufferedImage writeToCanvas(int x, int y, int rgb, BufferedImage bufferedCanvas) {
@@ -66,15 +63,11 @@ public class imgAnalyzer {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public static Boolean run(int minWidth, int maxWidth, int minHeight, int maxHeight, BufferedImage outputImage) throws IOException {
         BufferedImage img = openImage(pathImg);
         BufferedImage img2 = openImage(pathImg2);
-        Boolean res = compareImgs(img, img2);
+        Boolean res = compareImgs(img, img2, minWidth, maxWidth, minHeight, maxHeight, outputImage);
 
-        if (res) {
-            System.out.println("Le due immagini presentano differenze");
-        } else {
-            System.out.println("Le due immagini non presentano differenze");
-        }
+        return res;
     }
 }
