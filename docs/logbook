@@ -1,0 +1,23 @@
+Project progress
+_03/05/2021
+    Initial commit
+    Half an hour of work
+
+_04/05/2021
+    Three commits, developed the first version of the image comparison. Different size images and slightly different imgs are not usable yet.
+    A couple hours of work
+
+_05/05/2021
+    Small changes
+    Half an hour of work
+
+_06/05/2021
+    Now users can compare slightly different images, using a circa matching color pattern
+    An hour of work
+
+_07/05/2021
+    Created this logbook
+    Automatic creation of output image
+    Divided image analysis into 4 threads
+    Implementation is not excellent, not dynamic(according to number of available threads on the machine), a bit slow and clunky, throws OutofMemoryError exception if image is large (16K res not working, 4k works)
+    An hour of work
