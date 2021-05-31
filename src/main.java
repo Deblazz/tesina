@@ -5,8 +5,8 @@ import java.io.IOException;
 
 public class main {
 
-    public static final String pathImg = "/home/deblazz/Documents/tesina/media/pic.jpg";
-    public static final String pathImg2 = "/home/deblazz/Documents/tesina/media/pic2.jpg";
+    public static final String pathImg = "./media/pic.jpg";
+    public static final String pathImg2 = "./media/pic2.jpg";
 
     public static void main(String[] args) throws IOException {
         BufferedImage img1 = openImage(pathImg);

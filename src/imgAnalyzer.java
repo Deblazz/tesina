@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public class imgAnalyzer extends Thread {
 
-    public static final String pathImg = "/home/deblazz/Documents/tesina/media/pic.jpg";
-    public static final String pathImg2 = "/home/deblazz/Documents/tesina/media/pic2.jpg";
+    public static final String pathImg = "./media/pic.jpg";
+    public static final String pathImg2 = "./media/pic2.jpg";
 
 
     public static BufferedImage openImage(String path) throws IOException {
